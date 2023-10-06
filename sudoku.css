@@ -38,3 +38,16 @@
     display: table-cell;
     vertical-align: middle;
 }
+
+.panel {
+    margin-top: 10px;
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    display: flex;
+}
+
+.button {
+    width: calc(33.33% - 10px);
+}
