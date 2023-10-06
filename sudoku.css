@@ -8,5 +8,33 @@
     margin-right: auto;
     height: 700px;
     width: 700px;
-    background-color: aqua;
+    background-color: whitesmoke;
+    padding: 10px;
+    border: solid black 5px;
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+    border: solid black 1px;
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.small-column {
+    text-align: center;
+    
+    grid-template-columns: auto auto auto;
+    border: solid black 1px;
+    display: table;
+}
+
+.par-col {
+    height: 100%;
+    width: 100%;
+    
+    display: table-cell;
+    vertical-align: middle;
 }
