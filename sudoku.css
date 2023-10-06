@@ -1,31 +1,12 @@
-.div-main{
-    width:650px;
-    height:650px;
+.main-text {
+    font-family: Verdana;
+    font-weight: 700;
+}
+
+.container-sudoku {
     margin-left: auto;
     margin-right: auto;
-    background-color: green;
+    height: 700px;
+    width: 700px;
+    background-color: aqua;
 }
-.name{
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
-}
-.main-11{
-    
-    width: calc(650px /3);
-    height:calc(650px /3);
-    background-color: red;
-}
-.main-12{
-    margin-left: calc(650px /3);
-    width: calc(650px /3);
-    height:calc(650px /3);
-    background-color: yellow;
-    
-}
-.main-13{
-    width: calc(650px /3);
-    height:calc(650px /3);
-    background-color: black;
-}
-
-
