@@ -19,3 +19,27 @@ Przykładowy sposób implementacji algorytmu:
 
 6. Jeżeli macierz 3x3 zostanie poprawnie rozwiazana podświetli się ona na zielono
 7.Jeżeli wszystkie macierze 3x3 zostaną prawidłowo rozwiązane to cała macierz 9x9 zostanie podświetlona na zielono i wyświetli się napis "Udało Ci się rozwiązać sudoku".
+
+Dokumentacja techniczna algorytmu TileGenerator.js
+
+Generowanie planszy Sudoku
+Funkcja generateSudoku(): Ta funkcja jest głównym punktem wejścia do generowania planszy Sudoku. Tworzy planszę o rozmiarze 9x9, wypełniając ją wartościami null.
+
+Funkcja isValid(num, row, col): Ta funkcja sprawdza, czy dana liczba num jest dopuszczalna w danym polu planszy. Sprawdza, czy liczba nie występuje w tym samym wierszu, kolumnie i kwadracie 3x3. Wykorzystuje funkcje includes oraz some do sprawdzenia tych warunków.
+
+Funkcja fillGrid(row, col): Jest to funkcja rekurencyjna, która próbuje wypełnić planszę Sudoku. Rozpoczyna od pozycji (row, col) i przechodzi przez planszę w sposób rekurencyjny. Dla każdej pustej komórki, losuje i próbuje wstawić liczby od 1 do 9, sprawdzając przy tym warunki poprawności za pomocą isValid. Jeśli uda się wypełnić planszę, funkcja zwraca true.
+
+Wewnątrz funkcji fillGrid, liczby do wypróbowania są losowo tasowane, aby uzyskać różne układy planszy za każdym razem. Funkcja sort(() => Math.random() - 0.5) służy do tasowania.
+
+Generowana plansza jest przechowywana w tablicy grid, która jest zwracana na końcu.
+
+Uruchamianie kodu
+Po wywołaniu funkcji generateSudoku(), plansza Sudoku jest zapisywana w zmiennej sudokuGrid.
+
+Plansza jest wyświetlana w konsoli za pomocą pętli forEach i funkcji console.log.
+
+Opisowa dokumentacja algorytmu TileGenerator.js
+
+Ten kod generuje planszę Sudoku przy użyciu podejścia rekurencyjnego. Plansza jest wypełniana liczbami od 1 do 9, spełniającymi warunki gry Sudoku. Algorytm losowo wybiera liczby do wypełnienia planszy, co pozwala na uzyskanie różnych układów planszy za każdym razem, gdy kod jest uruchamiany.
+
+W kodzie wykorzystywane są funkcje JavaScript takie jak includes, some, sort oraz rekurencyjne wywołania funkcji w celu wypełnienia planszy. Algorytm jest zaprojektowany w sposób umożliwiający generowanie planszy bez zer.
