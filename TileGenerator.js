@@ -1,6 +1,7 @@
 function generateSudoku() {
   const size = 9;
   const grid = new Array(size).fill(null).map(() => new Array(size).fill(null));
+  const userGrid = new Array(size).fill(null).map(() => new Array(size).fill(null));
 
   // Funkcja sprawdzająca, czy liczba jest dopuszczalna w danym polu
   function isValid(num, row, col) {
@@ -42,9 +43,41 @@ function generateSudoku() {
     return false;
   }
 
-  fillGrid(0, 0);
+  //Funkcja losująca indeksy tablicy do wypełnienia, gzie len oznacza ilosc losowanych elementow
+  function randomIndex(len){
+    const selectedPairs = [];
+    const pairs = []; // tablica wykorzystywana do losowania elementow planszy sudoku zawiera kombinacje wszystkich indeksow
+    for (let i = 0; i < 9; i ++) {
+      for (let j = 0; j < 9; j++) {
+        pairs.push([i, j]);
+      }
+    }
 
-  return grid;
+    while (selectedPairs.length < len && pairs.length > 0) {
+      const randomIndex = Math.floor(Math.random() * pairs.length);
+      const pair = pairs[randomIndex];
+      selectedPairs.push(pair);
+      pairs.splice(randomIndex, 1);
+    }
+
+    return selectedPairs;
+  }
+
+  //Funkcja inichalizujaca plansze Sudoku pierwotnie widoczna dla uzytkownika
+  function fillUserGrid() {
+
+    const selectedPairs = randomIndex(25);
+    for (let i = 0; i < selectedPairs.length; i++) {
+      const firstPair = selectedPairs[i][0]; // Pierwsza para
+      const secondPair = selectedPairs[i][1]; // Druga para
+      userGrid[firstPair][secondPair] = grid[firstPair][secondPair];
+    }
+  }
+  
+  fillGrid(0, 0);
+  fillUserGrid();
+
+  return [grid, userGrid];
 }
   
 function CreateSudokuBoard() {
@@ -54,15 +87,15 @@ function CreateSudokuBoard() {
     });
   });
 
-  const sudokuGrid = generateSudoku();
+  const [sudokuGrid, sudokuUserGrid] = generateSudoku();
 
   sudokuGrid.forEach((row) => {
     console.log(row.join(' '));
   });
 
-  sudokuGrid.forEach((row, rowIdx) => {
+  sudokuUserGrid.forEach((row, rowIdx) => {
     row.forEach((value, colIdx) => {
-      cells[rowIdx][colIdx].textContent = value;
+        cells[rowIdx][colIdx].textContent = value;
     });
   });
 }
