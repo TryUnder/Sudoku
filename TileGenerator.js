@@ -103,3 +103,35 @@ function CreateSudokuBoard() {
 document.addEventListener("DOMContentLoaded", function () {
   CreateSudokuBoard();
 });
+
+//Dragging buttons from under the main board 
+function DragAndDrop(){
+  let buttons = document.getElementsByClassName("panel")
+
+    Array.from( { length: 9 }, (_, row) => {
+
+      Array.from( {length: 9}, (_, col) => {
+
+        let targetPlace = document.getElementById(`cell-${row + 1}-${col + 1}`);
+        for(list of buttons) {
+          list.addEventListener("dragstart", function(e){
+          let selected = e.target
+          //delete selected;
+          console.log(selected)
+         targetPlace.addEventListener("dragover", function(e){
+              e.preventDefault();
+              //selected=e.target;
+          });
+          targetPlace.addEventListener("drop", function(e){
+              targetPlace.prepend(selected);
+              selected=0
+          });
+        })
+      }
+      });
+    });
+  //alert(CreateSudokuBoard());
+
+  
+}
+DragAndDrop();
