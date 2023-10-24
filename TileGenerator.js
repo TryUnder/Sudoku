@@ -100,38 +100,72 @@ function CreateSudokuBoard() {
   });
 }
 
+function handleTileClick() {
+  let selectedElement = null;
+
+  Array.from({ length: 9 }, (_, row) => {
+      Array.from({ length: 9 }, (_, col) => {
+          let element = document.getElementById(`cell-${row + 1}-${col + 1}`);
+          element.addEventListener('click', function() {
+              if (selectedElement && selectedElement !== element) {
+                  selectedElement.style.backgroundColor = "";
+              }
+              element.style.backgroundColor = "pink";
+              selectedElement = element;
+          });
+      });
+  });
+}
+
+function handleButtonClick() {
+  selectedButton = null;
+
+  Array.from({ length: 9}, (_, row) => {
+    let button = document.getElementById(`button-${row + 1}`);
+    button.addEventListener('click', function() {
+      if (selectedButton && selectedButton !== button) {
+        selectedButton.style.backgroundColor = "";
+      }
+      button.style.backgroundColor = "pink";
+      selectedButton = button;
+    })
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   CreateSudokuBoard();
+  handleTileClick();
+  handleButtonClick();
 });
 
-//Dragging buttons from under the main board 
-function DragAndDrop(){
-  let buttons = document.getElementsByClassName("panel")
+// //Dragging buttons from under the main board 
+// function DragAndDrop(){
+//   let buttons = document.getElementsByClassName("panel")
 
-    Array.from( { length: 9 }, (_, row) => {
+//     Array.from( { length: 9 }, (_, row) => {
 
-      Array.from( {length: 9}, (_, col) => {
+//       Array.from( {length: 9}, (_, col) => {
 
-        let targetPlace = document.getElementById(`cell-${row + 1}-${col + 1}`);
-        for(list of buttons) {
-          list.addEventListener("dragstart", function(e){
-          let selected = e.target
-          //delete selected;
-          console.log(selected)
-         targetPlace.addEventListener("dragover", function(e){
-              e.preventDefault();
-              //selected=e.target;
-          });
-          targetPlace.addEventListener("drop", function(e){
-              targetPlace.prepend(selected);
-              selected=0
-          });
-        })
-      }
-      });
-    });
-  //alert(CreateSudokuBoard());
+//         let targetPlace = document.getElementById(`cell-${row + 1}-${col + 1}`);
+//         for(list of buttons) {
+//           list.addEventListener("dragstart", function(e){
+//           let selected = e.target
+//           //delete selected;
+//           console.log(selected)
+//          targetPlace.addEventListener("dragover", function(e){
+//               e.preventDefault();
+//               //selected=e.target;
+//           });
+//           targetPlace.addEventListener("drop", function(e){
+//               targetPlace.prepend(selected);
+//               selected=0
+//           });
+//         })
+//       }
+//       });
+//     });
+//   //alert(CreateSudokuBoard());
 
   
-}
-DragAndDrop();
+// }
+// DragAndDrop();
