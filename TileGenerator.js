@@ -112,6 +112,7 @@ function handleTileClick() {
               }
               element.style.backgroundColor = "pink";
               selectedElement = element;
+              PastCollectedValuesToMainBoard(undefined,undefined,`cell-${row + 1}-${col + 1}`);
           });
       });
   });
@@ -128,44 +129,53 @@ function handleButtonClick() {
       }
       button.style.backgroundColor = "pink";
       selectedButton = button;
-    })
+      PastCollectedValuesToMainBoard(`button-${row + 1}`,row+1,undefined);
+    });
   });
 }
+
+tempButtonId =undefined;
+tempbutton_value = -1;
+tempCellId = undefined;
+function PastCollectedValuesToMainBoard(button_id,button_value,cell_id){
+  if (button_id !== undefined){
+    tempButtonId=button_id;
+    tempButtonVal=button_value;
+  }
+  if (cell_id !== undefined){
+    tempCellId= cell_id;
+  }
+  if(tempButtonId && tempCellId !== undefined){
+    //console.log(tempButtonId)
+    let element = document.getElementById(tempCellId);
+    if( element !== null && element.childNodes.length === 0 ){ //jesli komórka jest pusta to mozesz przejsc dalej
+      element.innerHTML = tempButtonVal; //dodaj zaznaczona wartosc
+      if(element.innerHTML == tempButtonVal){ //sprawdz czy zosatala dodana wlasciwa wartosc z przycisku
+        console.log("Dodano")
+        tempButtonId =undefined;
+        tempCellId = undefined;
+        tempCellId = undefined;
+        return true
+      }
+      else {
+        console.log("blad-wartosc jest nieprawidlowa")
+        return false;
+      }
+    }
+    else{
+      console.log("miejsce zajete")
+      return false
+    }
+  }
+  return false;
+}
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
   CreateSudokuBoard();
   handleTileClick();
   handleButtonClick();
-});
-
-// //Dragging buttons from under the main board 
-// function DragAndDrop(){
-//   let buttons = document.getElementsByClassName("panel")
-
-//     Array.from( { length: 9 }, (_, row) => {
-
-//       Array.from( {length: 9}, (_, col) => {
-
-//         let targetPlace = document.getElementById(`cell-${row + 1}-${col + 1}`);
-//         for(list of buttons) {
-//           list.addEventListener("dragstart", function(e){
-//           let selected = e.target
-//           //delete selected;
-//           console.log(selected)
-//          targetPlace.addEventListener("dragover", function(e){
-//               e.preventDefault();
-//               //selected=e.target;
-//           });
-//           targetPlace.addEventListener("drop", function(e){
-//               targetPlace.prepend(selected);
-//               selected=0
-//           });
-//         })
-//       }
-//       });
-//     });
-//   //alert(CreateSudokuBoard());
-
   
-// }
-// DragAndDrop();
+
+});
