@@ -1,7 +1,8 @@
+var sudokuGrid = null;
+
 function generateSudoku() {
   const size = 9;
   const grid = new Array(size).fill(null).map(() => new Array(size).fill(null));
-  const userGrid = new Array(size).fill(null).map(() => new Array(size).fill(null));
 
   // Funkcja sprawdzająca, czy liczba jest dopuszczalna w danym polu
   function isValid(num, row, col) {
@@ -43,43 +44,11 @@ function generateSudoku() {
     return false;
   }
 
-  //Funkcja losująca indeksy tablicy do wypełnienia, gzie len oznacza ilosc losowanych elementow
-  function randomIndex(len){
-    const selectedPairs = [];
-    const pairs = []; // tablica wykorzystywana do losowania elementow planszy sudoku zawiera kombinacje wszystkich indeksow
-    for (let i = 0; i < 9; i ++) {
-      for (let j = 0; j < 9; j++) {
-        pairs.push([i, j]);
-      }
-    }
-
-    while (selectedPairs.length < len && pairs.length > 0) {
-      const randomIndex = Math.floor(Math.random() * pairs.length);
-      const pair = pairs[randomIndex];
-      selectedPairs.push(pair);
-      pairs.splice(randomIndex, 1);
-    }
-
-    return selectedPairs;
-  }
-
-  //Funkcja inichalizujaca plansze Sudoku pierwotnie widoczna dla uzytkownika
-  function fillUserGrid() {
-
-    const selectedPairs = randomIndex(25);
-    for (let i = 0; i < selectedPairs.length; i++) {
-      const firstPair = selectedPairs[i][0]; // Pierwsza para
-      const secondPair = selectedPairs[i][1]; // Druga para
-      userGrid[firstPair][secondPair] = grid[firstPair][secondPair];
-    }
-  }
-  
   fillGrid(0, 0);
-  fillUserGrid();
 
-  return [grid, userGrid];
+  return grid;
 }
-  
+
 function CreateSudokuBoard() {
   var cells = Array.from( { length: 9 }, (_, row) => {
     return Array.from( {length: 9}, (_, col) => {
@@ -87,95 +56,167 @@ function CreateSudokuBoard() {
     });
   });
 
-  const [sudokuGrid, sudokuUserGrid] = generateSudoku();
+  sudokuGrid = generateSudoku();
 
   sudokuGrid.forEach((row) => {
     console.log(row.join(' '));
   });
 
-  sudokuUserGrid.forEach((row, rowIdx) => {
+  sudokuGrid.forEach((row, rowIdx) => {
     row.forEach((value, colIdx) => {
-        cells[rowIdx][colIdx].textContent = value;
+      cells[rowIdx][colIdx].textContent = value;
     });
   });
 }
 
-function handleTileClick() {
-  let selectedElement = null;
+function hideRandomTiles() {
+  const allTiles = document.querySelectorAll(".par-col");
+  const shuffledTiles = Array.from(allTiles).sort(() => Math.random() - 0.5);
 
-  Array.from({ length: 9 }, (_, row) => {
-      Array.from({ length: 9 }, (_, col) => {
-          let element = document.getElementById(`cell-${row + 1}-${col + 1}`);
-          element.addEventListener('click', function() {
-              if (selectedElement && selectedElement !== element) {
-                  selectedElement.style.backgroundColor = "";
-              }
-              element.style.backgroundColor = "pink";
-              selectedElement = element;
-              PastCollectedValuesToMainBoard(undefined,undefined,`cell-${row + 1}-${col + 1}`);
-          });
-      });
-  });
+  allTiles.forEach(tile => tile.style.fontSize = "0px");
+
+  for (let i = 0; i < Math.min(45, shuffledTiles.length); i++) {
+    shuffledTiles[i].style.fontSize = "24px";
+  }
 }
 
-function handleButtonClick() {
-  selectedButton = null;
+var selectedButton = null
+var selectedTile = null
+  function handleTileClick(selectedButton) {
 
-  Array.from({ length: 9}, (_, row) => {
-    let button = document.getElementById(`button-${row + 1}`);
-    button.addEventListener('click', function() {
+    if(selectedButton){
+
+    Array.from({ length: 9 }, (_, row) => {
+      Array.from({ length: 9 }, (_, col) => {
+          const tile = document.getElementById(`cell-${row + 1}-${col + 1}`);
+          tile.addEventListener('click',  function abc() {
+            if (selectedTile && selectedTile !== tile) {
+              selectedTile.style.backgroundColor = "";
+            }
+            tile.style.backgroundColor = "pink";
+            selectedTile = tile;
+            if(selectedButton ==null){
+                tile.removeEventListener('click',abc);
+                tile.style.backgroundColor = "";
+            }
+            if (selectedButton && selectedTile) {
+              var validity = checkValidity(selectedButton)
+              if (validity == true ) {
+                ExposeElement(selectedTile);
+                updateCss(validity);
+                selectedButton = null;
+                //selectedTile = null;
+    
+              } else if (validity == false ) {
+                updateError();
+                updateCss(validity);
+                selectedButton = null;
+
+              }
+
+            }
+
+
+          }
+          );
+
+      });
+    });
+
+  }
+
+}
+
+
+var error = document.getElementById("error");
+
+function handleButtonClick() {
+  Array.from({ length: 9 }, (_, row) => {
+    const button = document.getElementById(`button-${row + 1}`);
+    button.addEventListener('click', function () {
+      
       if (selectedButton && selectedButton !== button) {
         selectedButton.style.backgroundColor = "";
       }
       button.style.backgroundColor = "pink";
       selectedButton = button;
-      PastCollectedValuesToMainBoard(`button-${row + 1}`,row+1,undefined);
+
+      if(selectedButton != null){
+        handleTileClick(selectedButton);
+
+        selectedTile=null
+      }
+
+      // if (selectedButton && selectedTile) {
+      //   var validity = checkValidity()
+      //   if (validity == true) {
+      //     ExposeElement(selectedTile);
+      //     updateCss(validity);
+      //     selectedButton = null;
+      //     //selectedTile = null;
+      //   } else if (validity == false) {
+      //     updateError();
+      //     updateCss(validity);
+      //     selectedButton = null;
+      //     //selectedTile = null;
+
+      //   }
+      // }
+
     });
   });
 }
 
-tempButtonId =undefined;
-tempbutton_value = -1;
-tempCellId = undefined;
-function PastCollectedValuesToMainBoard(button_id,button_value,cell_id){
-  if (button_id !== undefined){
-    tempButtonId=button_id;
-    tempButtonVal=button_value;
-  }
-  if (cell_id !== undefined){
-    tempCellId= cell_id;
-  }
-  if(tempButtonId && tempCellId !== undefined){
-    //console.log(tempButtonId)
-    let element = document.getElementById(tempCellId);
-    if( element !== null && element.childNodes.length === 0 ){ //jesli komórka jest pusta to mozesz przejsc dalej
-      element.innerHTML = tempButtonVal; //dodaj zaznaczona wartosc
-      if(element.innerHTML == tempButtonVal){ //sprawdz czy zosatala dodana wlasciwa wartosc z przycisku
-        console.log("Dodano")
-        tempButtonId =undefined;
-        tempCellId = undefined;
-        tempCellId = undefined;
-        return true
-      }
-      else {
-        console.log("blad-wartosc jest nieprawidlowa")
-        return false;
-      }
-    }
-    else{
-      console.log("miejsce zajete")
-      return false
-    }
-  }
-  return false;
+function updateError() {
+  var error = document.getElementById("error");
+  var increment = parseInt(error.textContent);
+  increment++;
+  error.textContent = increment.toString();
 }
 
+function getRowAndColFFromTileId(tileId) {
+  return [parseInt(tileId.slice(5)), parseInt(tileId.slice(7))];
+}
+
+function checkValidity(selectedButton) {
+
+  const buttonValue = parseInt(selectedButton.textContent);
+  const [row, col] = getRowAndColFFromTileId(selectedTile.id);
+
+  const cellValue = sudokuGrid[row - 1][col - 1];
+
+  if (buttonValue === cellValue ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function ExposeElement(selectedTile) {
+  selectedTile.style.fontSize = "24px";
+
+}
+
+function updateCss(validity) {
+  if(validity==false){
+    selectedTile.style.backgroundColor = "red";
+    setTimeout(function() {
+      selectedTile.style.backgroundColor = "";
+      selectedButton.style.backgroundColor = "";
+    }, 700);
+  }
+  else{
+    selectedTile.style.backgroundColor = "green";
+    setTimeout(function() {
+      selectedTile.style.backgroundColor = "";
+      selectedButton.style.backgroundColor = "";
+    }, 700);
+  }
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {
   CreateSudokuBoard();
-  handleTileClick();
+  hideRandomTiles();
   handleButtonClick();
-  
-
 });
