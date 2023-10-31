@@ -40,12 +40,9 @@ function generateSudoku() {
         grid[row][col] = null;
       }
     }
-
     return false;
   }
-
   fillGrid(0, 0);
-
   return grid;
 }
 
@@ -105,26 +102,18 @@ var selectedTile = null
                 ExposeElement(selectedTile);
                 updateCss(validity);
                 selectedButton = null;
-                //selectedTile = null;
     
               } else if (validity == false ) {
                 updateError();
                 updateCss(validity);
                 selectedButton = null;
-
               }
-
             }
-
-
           }
           );
-
       });
     });
-
   }
-
 }
 
 
@@ -147,30 +136,24 @@ function handleButtonClick() {
         selectedTile=null
       }
 
-      // if (selectedButton && selectedTile) {
-      //   var validity = checkValidity()
-      //   if (validity == true) {
-      //     ExposeElement(selectedTile);
-      //     updateCss(validity);
-      //     selectedButton = null;
-      //     //selectedTile = null;
-      //   } else if (validity == false) {
-      //     updateError();
-      //     updateCss(validity);
-      //     selectedButton = null;
-      //     //selectedTile = null;
-
-      //   }
-      // }
-
     });
   });
 }
 
+
+function lost(){
+  window.location.href ="Lost.html"
+}
+
 function updateError() {
   var error = document.getElementById("error");
-  var increment = parseInt(error.textContent);
-  increment++;
+  var increment = parseFloat(error.textContent);
+  increment = increment - 0.5;
+  if(increment === 0){
+    lost();
+  }
+  console.log(increment)
+
   error.textContent = increment.toString();
 }
 
@@ -194,7 +177,6 @@ function checkValidity(selectedButton) {
 
 function ExposeElement(selectedTile) {
   selectedTile.style.fontSize = "24px";
-
 }
 
 function updateCss(validity) {
@@ -213,7 +195,6 @@ function updateCss(validity) {
     }, 700);
   }
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
   CreateSudokuBoard();

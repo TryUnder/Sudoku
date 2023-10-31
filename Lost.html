@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0 user-scalable=no">
+        <title>SUDOKU</title>
+        <link rel="stylesheet" href="lost.css">
+    </head>
+    <body>
+        <div>    
+                <h1 class="main-text">KONIEC GRY</h1>
+                <h4 class ="text">Straciłeś wszystkie życia.<br>Możesz rozpocząć nową grę klikając przycisk poniżej:</h4>
+                <div class="container">    
+                    <button id="btnNowaGra">Nowa gra</button>
+                </div>
+        </div>
+        
+        <script>
+            var redirectButton = document.getElementById('btnNowaGra');
+
+            redirectButton.addEventListener('click', function() {
+              // Przekieruj na nową stronę
+              window.location.href = 'Sudoku.html';
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+.main-text {
+    text-align: center;
+
+}
+.text {
+    text-align: center;
+    font-family: Verdana;
+    color: grey;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

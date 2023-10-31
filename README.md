@@ -43,3 +43,5 @@ Opisowa dokumentacja algorytmu TileGenerator.js
 Ten kod generuje planszę Sudoku przy użyciu podejścia rekurencyjnego. Plansza jest wypełniana liczbami od 1 do 9, spełniającymi warunki gry Sudoku. Algorytm losowo wybiera liczby do wypełnienia planszy, co pozwala na uzyskanie różnych układów planszy za każdym razem, gdy kod jest uruchamiany.
 
 W kodzie wykorzystywane są funkcje JavaScript takie jak includes, some, sort oraz rekurencyjne wywołania funkcji w celu wypełnienia planszy. Algorytm jest zaprojektowany w sposób umożliwiający generowanie planszy bez zer.
+
+lost() - funkcja przekierowuje do okna informujacego  o przegranej grze oraz daje mozliwosc rozpoczecia nowej gry

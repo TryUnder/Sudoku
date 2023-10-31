@@ -10,6 +10,11 @@
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
     display: flex;
 }
+.errorTitle{
+    color:red;
+    text-align: center;
+    margin-bottom: 20px;
+}
 .errors{
     color:red;
     text-align: center;
