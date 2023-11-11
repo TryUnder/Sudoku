@@ -75,27 +75,45 @@ function hideRandomTiles() {
   for (let i = 0; i < Math.min(45, shuffledTiles.length); i++) {
     shuffledTiles[i].style.fontSize = "24px";
   }
+
 }
 
 var selectedButton = null
 var selectedTile = null
+
   function handleTileClick(selectedButton) {
 
     if(selectedButton){
+    const buttonValue = parseInt(selectedButton.textContent);
+
 
     Array.from({ length: 9 }, (_, row) => {
       Array.from({ length: 9 }, (_, col) => {
+
           const tile = document.getElementById(`cell-${row + 1}-${col + 1}`);
+          const tileValue =parseInt(tile.textContent);;
+
+          if(buttonValue ===tileValue && tile.style.fontSize === "24px"){
+            tile.style.backgroundColor = "Orange";
+            setTimeout(function() {
+              tile.style.backgroundColor = "";
+            }, 700);
+          }
+
           tile.addEventListener('click',  function abc() {
+
+
             if (selectedTile && selectedTile !== tile) {
               selectedTile.style.backgroundColor = "";
             }
+            if(selectedTile)
             tile.style.backgroundColor = "pink";
             selectedTile = tile;
             if(selectedButton ==null){
                 tile.removeEventListener('click',abc);
                 tile.style.backgroundColor = "";
             }
+
             if (selectedButton && selectedTile) {
               var validity = checkValidity(selectedButton)
               if (validity == true ) {
@@ -132,7 +150,6 @@ function handleButtonClick() {
 
       if(selectedButton != null){
         handleTileClick(selectedButton);
-
         selectedTile=null
       }
 
@@ -180,6 +197,8 @@ function ExposeElement(selectedTile) {
 }
 
 function updateCss(validity) {
+
+
   if(validity==false){
     selectedTile.style.backgroundColor = "red";
     setTimeout(function() {
