@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUDOKU</title>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body.light-mode {
+      background-color: #f8f9fa;
+      color: #000000;
+    }
+
+    body.dark-mode {
+      background-color: #343a40;
+      color: #ffffff;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #007bff;
+    }
+
+    label {
+      font-weight: bold;
+      color: #343a40;
+    }
+
+    select.form-control {
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+    }
+
+    button.btn-primary {
+      background-color: #007bff;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+      padding: 8px 16px;
+      margin-right: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button.btn-primary:hover {
+      background-color: #0056b3;
+      border: 1px solid #0056b3;
+    }
+
+    .btn-toggle {
+      background-color: #343a40;
+      color: #ffffff;
+      border: 1px solid #343a40;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-toggle:hover {
+      background-color: #5a6268;
+      border: 1px solid #5a6268;
+    }
+  </style>
+</head>
+<body class="light-mode">
+
+  <div class="container mt-5">
+    <h1 class="text-center">SUDOKU</h1>
+    
+    <form>
+      <div class="form-group">
+        <label for="trudnosc">Wybierz trudność:</label>
+        <select class="form-control" id="trudnosc">
+          <option value="latwa">Łatwa</option>
+          <option value="srednia">Średnia</option>
+          <option value="trudna">Trudna</option>
+        </select>
+      </div>
+      
+      <button type="button" class="btn btn-primary animated-button" id="btnNowaGra">Rozpocznij grę</button>
+      <button type="button" class="btn btn-toggle animated-button" id="btnToggleTlo">Zmień tło</button>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    var redirectButton = document.getElementById('btnNowaGra');
+    var toggleButton = document.getElementById('btnToggleTlo');
+
+    redirectButton.addEventListener('click', function() {
+      var trudnosc = document.getElementById('trudnosc').value;
+      var sciezka = 'Sudoku.html?trudnosc=' + trudnosc;
+
+      window.location.href = sciezka;
+    });
+
+    toggleButton.addEventListener('click', function() {
+      var body = document.body;
+      body.classList.toggle('light-mode');
+      body.classList.toggle('dark-mode');
+    });
+  </script>
+</body>
+</html>

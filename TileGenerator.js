@@ -66,13 +66,31 @@ function CreateSudokuBoard() {
   });
 }
 
-function hideRandomTiles() {
+function hideRandomTiles(trudnosc) {
   const allTiles = document.querySelectorAll(".par-col");
   const shuffledTiles = Array.from(allTiles).sort(() => Math.random() - 0.5);
 
   allTiles.forEach(tile => tile.style.fontSize = "0px");
+  var tilesNumber = 0;
+  switch (trudnosc) {
 
-  for (let i = 0; i < Math.min(45, shuffledTiles.length); i++) {
+    case "trudna": {
+      tilesNumber = 25;
+    }
+      break;
+
+    case "srednia": {
+      tilesNumber = 35;
+    }
+      break;
+
+    case "latwa": {
+      tilesNumber = 50;
+    }
+      break;
+  }
+
+  for (let i = 0; i < Math.min(tilesNumber, shuffledTiles.length); i++) {
     shuffledTiles[i].style.fontSize = "24px";
   }
 
@@ -197,8 +215,6 @@ function ExposeElement(selectedTile) {
 }
 
 function updateCss(validity) {
-
-
   if(validity==false){
     selectedTile.style.backgroundColor = "red";
     setTimeout(function() {
@@ -215,8 +231,14 @@ function updateCss(validity) {
   }
 }
 
+function getParameter() {
+  var urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('trudnosc');
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+  const trudnosc = getParameter();
   CreateSudokuBoard();
-  hideRandomTiles();
+  hideRandomTiles(trudnosc);
   handleButtonClick();
 });
