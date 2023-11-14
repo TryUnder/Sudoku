@@ -136,7 +136,9 @@ var selectedTile = null
                 updateCss(validity);
                 selectedButton = null;
                 setTimeout(function(){
-                  window.location.href = "SudokuEnd.html";
+                  if(checkGameCompletion()){
+                    window.location.href = "SudokuEnd.html";
+                  }
                 }, 2000);
     
               } else if (validity == false ) {
