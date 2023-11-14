@@ -242,3 +242,11 @@ document.addEventListener("DOMContentLoaded", function () {
   hideRandomTiles(trudnosc);
   handleButtonClick();
 });
+
+function przejdzDoInnegoOkna() {
+  var potwierdzenie = confirm("Czy na pewno chcesz rozpocząć nową grę?");
+            
+  if (potwierdzenie) {
+    window.location.href = "SudokuStart.html";
+  }
+}

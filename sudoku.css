@@ -37,6 +37,27 @@
     font-weight: bold;
     border-radius: 10px;
 }
+.newPlay {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #btnNowaGra {
+    font-weight: bold;
+    -webkit-text-stroke: 0.5px black;
+    color: black;
+    font-size: 30px;
+    background-color: gray;
+    box-shadow: 0 0 5px 2px #000; 
+    border-radius: 5px;
+}
+
+#btnNowaGra:hover {
+    -webkit-text-stroke: 0.5px white;
+    color: white;
+    background-color: black;
+}
 /*
 .grid-item {
     border:2px solid black ;

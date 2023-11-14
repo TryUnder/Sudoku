@@ -13,3 +13,11 @@
     align-items: center;
     justify-content: center;
   }
+
+#btnNowaGra{
+    border-radius: 3px;
+}
+#btnNowaGra:hover{
+    color: white;
+    background-color: black;
+}
