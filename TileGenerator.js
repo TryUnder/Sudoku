@@ -54,7 +54,6 @@ function CreateSudokuBoard() {
   });
 
   sudokuGrid = generateSudoku();
-
   sudokuGrid.forEach((row) => {
     console.log(row.join(' '));
   });
@@ -138,6 +137,13 @@ var selectedTile = null
                 ExposeElement(selectedTile);
                 updateCss(validity);
                 selectedButton = null;
+                if (checkGameCompletion()) {
+                  var potwierdzenie = confirm("Wygrałeś!!! Udało Ci się ukańczyć grę. Czy chcesz rozpocząć nową grę?");
+                    
+                  if (potwierdzenie) {
+                    window.location.href = "SudokuStart.html";
+                  }
+                }
     
               } else if (validity == false ) {
                 updateError();
@@ -147,6 +153,7 @@ var selectedTile = null
             }
           }
           );
+          
       });
     });
   }
@@ -156,7 +163,9 @@ var selectedTile = null
 var error = document.getElementById("error");
 
 function handleButtonClick() {
+
   Array.from({ length: 9 }, (_, row) => {
+
     const button = document.getElementById(`button-${row + 1}`);
     button.addEventListener('click', function () {
       
@@ -206,6 +215,7 @@ function checkValidity(selectedButton) {
   if (buttonValue === cellValue ) {
     return true;
   } else {
+    console.log("buttonValue: ${buttonValue}, cellValue: ${cellValue}")
     return false;
   }
 }
@@ -238,15 +248,30 @@ function getParameter() {
 
 document.addEventListener("DOMContentLoaded", function () {
   const trudnosc = getParameter();
+  console.log("Before Create")
   CreateSudokuBoard();
   hideRandomTiles(trudnosc);
   handleButtonClick();
+   
 });
 
-function przejdzDoInnegoOkna() {
+function goToDifferentWinow() {
   var potwierdzenie = confirm("Czy na pewno chcesz rozpocząć nową grę?");
             
   if (potwierdzenie) {
     window.location.href = "SudokuStart.html";
   }
+}
+
+function checkGameCompletion() {
+  for (let row = 1; row <= 9; row++) {
+    for (let col = 1; col <= 9; col++) {
+      const element = document.getElementById(`cell-${row}-${col}`);
+      const elementFontSize = window.getComputedStyle(element).fontSize;
+
+      if (elementFontSize !== '24px') { return false; }
+    }
+  }
+
+  return true;
 }
