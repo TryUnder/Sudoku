@@ -109,12 +109,10 @@ var selectedTile = null
 
           const tile = document.getElementById(`cell-${row + 1}-${col + 1}`);
           const tileValue =parseInt(tile.textContent);;
+          tile.style.backgroundColor = "";
 
           if(buttonValue ===tileValue && tile.style.fontSize === "24px"){
             tile.style.backgroundColor = "Orange";
-            setTimeout(function() {
-              tile.style.backgroundColor = "";
-            }, 700);
           }
 
           tile.addEventListener('click',  function abc() {
