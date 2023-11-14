@@ -135,13 +135,9 @@ var selectedTile = null
                 ExposeElement(selectedTile);
                 updateCss(validity);
                 selectedButton = null;
-                if (checkGameCompletion()) {
-                  var potwierdzenie = confirm("Wygrałeś!!! Udało Ci się ukańczyć grę. Czy chcesz rozpocząć nową grę?");
-                    
-                  if (potwierdzenie) {
-                    window.location.href = "SudokuStart.html";
-                  }
-                }
+                setTimeout(function(){
+                  window.location.href = "SudokuEnd.html";
+                }, 2000);
     
               } else if (validity == false ) {
                 updateError();

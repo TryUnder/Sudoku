@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width initial-scale=1.0 user-scalable=no">
+        <title>WINNER</title>
+        <style>
+            .main-text {   
+                text-align: center;
+                font-family: 'Franklin Gothic Medium';
+                font-size: 60px;
+                color: red;
+            }
+
+            .text {
+                text-align: center;
+                font-family: 'Trebuchet MS';
+                color: black;
+            }
+            
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            #btnNowaGra{
+                border-radius: 3px;
+                font-size: 30px;
+
+            }
+            
+            #btnNowaGra:hover{
+                color: white;
+                background-color: black;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div>    
+                <h1 class="main-text"> ZWYCIĘSTWO!</h1>
+                <h4 class ="text">Udało Ci się ukończyć grę.<br>Możesz rozpocząć nową grę klikając przycisk poniżej:</h4>
+                <div class="container">    
+                    <button id="btnNowaGra">Nowa gra</button>
+                </div>
+        </div>
+        
+        <script>
+            var redirectButton = document.getElementById('btnNowaGra');
+
+            redirectButton.addEventListener('click', function() {
+              window.location.href = 'SudokuStart.html';
+            });
+        </script>
+    </body>
+</html>

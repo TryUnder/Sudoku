@@ -1,11 +1,14 @@
-.main-text {
+.main-text {   
     text-align: center;
-
+    font-family: 'Franklin Gothic Medium';
+    font-size: 60px;
+    color: red;
 }
+
 .text {
     text-align: center;
-    font-family: Verdana;
-    color: grey;
+    font-family: 'Trebuchet MS';
+    color: black;
 }
 
 .container {
@@ -14,8 +17,11 @@
     justify-content: center;
   }
 
-#btnNowaGra{
+  
+  #btnNowaGra{
     border-radius: 3px;
+    font-size: 30px;
+
 }
 #btnNowaGra:hover{
     color: white;
