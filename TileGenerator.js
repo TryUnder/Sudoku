@@ -94,88 +94,78 @@ function hideRandomTiles(trudnosc) {
   }
 
 }
+var error = document.getElementById("error");
 
-var selectedButton = null
-var selectedTile = null
 
-  function handleTileClick(selectedButton) {
+var selectedButton = null;
+var selectedTile = null;
 
-    if(selectedButton){
-    const buttonValue = parseInt(selectedButton.textContent);
-
+function handleTileClick(button) {
+  if (button) {
+    const buttonValue = parseInt(button.textContent);
 
     Array.from({ length: 9 }, (_, row) => {
       Array.from({ length: 9 }, (_, col) => {
+        const tile = document.getElementById(`cell-${row + 1}-${col + 1}`);
+        const tileValue = parseInt(tile.textContent);
 
-          const tile = document.getElementById(`cell-${row + 1}-${col + 1}`);
-          const tileValue =parseInt(tile.textContent);;
           tile.style.backgroundColor = "";
 
-          if(buttonValue ===tileValue && tile.style.fontSize === "24px"){
-            tile.style.backgroundColor = "Orange";
+        if (buttonValue === tileValue && tile.style.fontSize === "24px") {
+          tile.style.backgroundColor = "Orange";
+        }
+        if (tile != null) {
+          tile.removeEventListener('click', handleTileClick);
+        }
+
+        tile.addEventListener('click', function abc() {
+          if (selectedTile && selectedTile !== tile) {
+            selectedTile.style.backgroundColor = "";
+          }
+          tile.style.backgroundColor = "pink";
+          selectedTile = tile;
+          if (selectedButton) {
+            selectedButton.style.backgroundColor = "";
           }
 
-          tile.addEventListener('click',  function abc() {
-
-
-            if (selectedTile && selectedTile !== tile) {
-              selectedTile.style.backgroundColor = "";
-            }
-            if(selectedTile)
-            tile.style.backgroundColor = "pink";
-            selectedTile = tile;
-            if(selectedButton ==null){
-                tile.removeEventListener('click',abc);
-                tile.style.backgroundColor = "";
-            }
-
-            if (selectedButton && selectedTile) {
-              var validity = checkValidity(selectedButton)
-              if (validity == true ) {
-                ExposeElement(selectedTile);
-                updateCss(validity);
-                selectedButton = null;
-                setTimeout(function(){
-                  if(checkGameCompletion()){
-                    window.location.href = "SudokuEnd.html";
-                  }
-                }, 2000);
-    
-              } else if (validity == false ) {
-                updateError();
-                updateCss(validity);
-                selectedButton = null;
-              }
+          if (selectedButton && selectedTile) {
+            var validity = checkValidity(selectedButton);
+            if (validity === true) {
+              ExposeElement(selectedTile);
+              updateCss(validity);
+              selectedButton = null;
+              setTimeout(function () {
+                if (checkGameCompletion()) {
+                  window.location.href = "SudokuEnd.html";
+                }
+              }, 2000);
+            } else if (validity === false) {
+              updateError();
+              updateCss(validity);
+              selectedButton = null;
             }
           }
-          );
-          
+        });
       });
     });
   }
 }
 
-
-var error = document.getElementById("error");
-
 function handleButtonClick() {
-
   Array.from({ length: 9 }, (_, row) => {
-
     const button = document.getElementById(`button-${row + 1}`);
     button.addEventListener('click', function () {
-      
       if (selectedButton && selectedButton !== button) {
         selectedButton.style.backgroundColor = "";
+        selectedButton = null;
       }
       button.style.backgroundColor = "pink";
       selectedButton = button;
 
       if(selectedButton != null){
         handleTileClick(selectedButton);
-        selectedTile=null
+        selectedTile=null;
       }
-
     });
   });
 }
@@ -187,8 +177,8 @@ function lost(){
 
 function updateError() {
   var error = document.getElementById("error");
-  var increment = parseFloat(error.textContent);
-  increment = increment - 0.5;
+  var increment = parseInt(error.textContent);
+  increment = increment - 1;
   if(increment === 0){
     lost();
   }
@@ -225,14 +215,18 @@ function updateCss(validity) {
     selectedTile.style.backgroundColor = "red";
     setTimeout(function() {
       selectedTile.style.backgroundColor = "";
-      selectedButton.style.backgroundColor = "";
+      if (selectedButton != null) {
+        selectedButton.style.backgroundColor = "";
+      }
     }, 700);
   }
   else{
     selectedTile.style.backgroundColor = "green";
     setTimeout(function() {
       selectedTile.style.backgroundColor = "";
-      selectedButton.style.backgroundColor = "";
+      if (selectedButton != null) {
+        selectedButton.style.backgroundColor = "";
+      }
     }, 700);
   }
 }
